@@ -1,0 +1,42 @@
+name: Documentation Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check README links
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          text = Path("README.md").read_text(encoding="utf-8")
+          links = re.findall(r'\[[^\]]+\]\(([^)]+)\)', text)
+
+          broken = []
+          for link in links:
+              if link.startswith(("http:", "https:", "#", "mailto:")):
+                  continue
+              path = link.split("#")[0]
+              if path and not Path(path).is_file():
+                  broken.append(link)
+
+          if broken:
+              print("Broken links:", broken)
+              sys.exit(1)
+
+          print("README local links are valid!")
+          PY
