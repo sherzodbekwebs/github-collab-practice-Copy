@@ -14,3 +14,7 @@ This repository is for practicing GitHub collaboration.
 - Pull Requests
 - Code Reviews
 - Team Collaboration
+
+## Commit Attribution
+
+Learning how GitHub recognizes commit authors and co-authors.
