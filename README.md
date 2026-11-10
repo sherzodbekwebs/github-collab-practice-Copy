@@ -33,3 +33,10 @@ Read the [Contributing Guide](CONTRIBUTING.md) before making changes.
 ## Pull Requests
 
 Please follow our [Pull Request Template](.github/pull_request_template.md) when submitting changes.
+
+## Developer Guides
+
+Explore the project's development documentation:
+
+- [Git Workflow Guide](docs/GIT_WORKFLOW.md) — branching, commits, and pull requests.
+- [Code Review Guide](docs/CODE_REVIEW.md) — reviewing code quality, security, and changes.
