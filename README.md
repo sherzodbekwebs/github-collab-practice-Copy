@@ -18,3 +18,5 @@ This repository is for practicing GitHub collaboration.
 ## Commit Attribution
 
 Learning how GitHub recognizes commit authors and co-authors.
+
+This guide also covers commit attribution.
