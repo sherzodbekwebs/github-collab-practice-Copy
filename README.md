@@ -20,3 +20,16 @@ This repository is for practicing GitHub collaboration.
 Learning how GitHub recognizes commit authors and co-authors.
 
 This guide also covers commit attribution.
+
+## Contributing
+
+Read the [Contributing Guide](CONTRIBUTING.md) before making changes.
+
+## Issue Templates
+
+- [Report a Bug](.github/ISSUE_TEMPLATE/bug_report.md)
+- [Request a Feature](.github/ISSUE_TEMPLATE/feature_request.md)
+
+## Pull Requests
+
+Please follow our [Pull Request Template](.github/pull_request_template.md) when submitting changes.
