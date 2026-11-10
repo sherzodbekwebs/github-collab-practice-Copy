@@ -16,27 +16,56 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check README links
+      - name: Check all Markdown links
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          from urllib.parse import unquote
           import re
           import sys
 
-          text = Path("README.md").read_text(encoding="utf-8")
-          links = re.findall(r'\[[^\]]+\]\(([^)]+)\)', text)
-
+          repo = Path.cwd()
+          files = list(repo.rglob("*.md"))
           broken = []
-          for link in links:
-              if link.startswith(("http:", "https:", "#", "mailto:")):
-                  continue
-              path = link.split("#")[0]
-              if path and not Path(path).is_file():
-                  broken.append(link)
+
+          for file in files:
+              content = file.read_text(encoding="utf-8")
+              links = re.findall(
+                  r'\[[^\]]+\]\(([^)]+)\)',
+                  content
+              )
+
+              for link in links:
+                  if link.startswith((
+                      "http:", "https:",
+                      "mailto:", "#"
+                  )):
+                      continue
+
+                  target = unquote(
+                      link.split("#")[0].split("?")[0]
+                  )
+
+                  if not target:
+                      continue
+
+                  if target.startswith("/"):
+                      path = repo / target.lstrip("/")
+                  else:
+                      path = file.parent / target
+
+                  if not path.exists():
+                      broken.append(
+                          f"{file.relative_to(repo)}: {link}"
+                      )
+
+          print(f"Checked {len(files)} Markdown files")
 
           if broken:
-              print("Broken links:", broken)
+              print("Broken local links:")
+              for item in broken:
+                  print(f" - {item}")
               sys.exit(1)
 
-          print("README local links are valid!")
+          print("All local Markdown links are valid!")
           PY
